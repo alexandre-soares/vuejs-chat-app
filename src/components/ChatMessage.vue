@@ -6,13 +6,20 @@
     <audio v-if="message.audioURL" :src="message.audioURL" controls></audio>
     <br />
 
-    <span class="sender">from UID {{ message.sender }}</span>
+    <span class="sender"
+      >from UID {{ message.sender }} {{ messageDate }}</span
+    >
   </div>
 </template>
 
 <script>
 export default {
   props: ["message", "owner"],
+  computed: {
+    messageDate() {
+      return new Date(this.message.createdAt).toString();
+    },
+  },
 };
 </script>
 <style>
