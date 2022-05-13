@@ -5,10 +5,9 @@
 </template>
 
 <script>
-import { ref } from "@vue/composition-api";
 import { auth } from "../firebase";
+import { ref } from "@vue/composition-api";
 export default {
-  name: "User",
   setup() {
     const user = ref(null);
     const unsubscribe = auth.onAuthStateChanged(
@@ -19,11 +18,8 @@ export default {
       unsubscribe,
     };
   },
-
   destroyed() {
-    this.unsubscribe;
+    this.unsubscribe();
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

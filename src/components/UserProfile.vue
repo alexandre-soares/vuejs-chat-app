@@ -1,15 +1,13 @@
 <template>
   <div>
-    Logged in as {{ user.uid }}
-
-    <button @click="auth.signOut()">Sign Out</button>
+    Logged in as {{ user.uid }}<br />
+    <button @click="auth.signOut()" class="button">Sign Out</button>
   </div>
 </template>
 
 <script>
 import { auth } from "../firebase";
 export default {
-  name: "UserProfile",
   data() {
     return {
       auth,
@@ -18,5 +16,3 @@ export default {
   props: ["user"],
 };
 </script>
-
-<style lang="scss" scoped></style>

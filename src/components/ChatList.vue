@@ -2,12 +2,13 @@
   <div>
     <ul>
       <li v-for="chat of chats" :key="chat.id">
-        <router-link :to="{ name: 'chat', params: { id: chat.id } }">
-          {{ chat.id }}</router-link
-        >
+        <router-link :to="{ name: 'chat', params: { id: chat.id } }">{{
+          chat.id
+        }}</router-link>
       </li>
     </ul>
-    <button class="button" @click="createChatRoom()">
+
+    <button @click="createChatRoom()" class="button">
       Create New Chat Room
     </button>
   </div>
@@ -16,8 +17,6 @@
 <script>
 import { db } from "../firebase";
 export default {
-  name: "ChatList",
-  props: ["uid"],
   data() {
     return {
       chats: [],
@@ -35,11 +34,9 @@ export default {
         owner: this.uid,
         members: [this.uid],
       });
-
       console.log(newChat);
     },
   },
+  props: ["uid"],
 };
 </script>
-
-<style lang="scss" scoped></style>

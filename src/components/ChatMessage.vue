@@ -1,22 +1,21 @@
 <template>
   <div class="message" :class="{ 'from-user': owner }">
-    {{ message.text }} <br />
+    {{ message.text }}
+    <br />
 
     <audio v-if="message.audioURL" :src="message.audioURL" controls></audio>
     <br />
-    
+
     <span class="sender">from UID {{ message.sender }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ChatMessage",
   props: ["message", "owner"],
 };
 </script>
-
-<style scoped>
+<style>
 .message {
   background: #dddddd;
   color: black;

@@ -1,51 +1,67 @@
 <template>
-  <div>
-    <h3>Welcome to ChatRoom {{ chatId }}</h3>
+  <main class="section">
+    <h3>Welcome to ChatRoom.vue {{ chatId }}</h3>
+
+    <router-link to="/">Back</router-link>
+
+    <p>
+      Open this link in another browser window to chat
+      <code>https://your-url.com/#/chats/{{ chatId }}</code>
+    </p>
 
     <User>
       <template #user="{ user }">
-        <ul>
-          <li v-for="message of messages" :key="message.id">
-            <ChatMessage
-              :message="message"
-              :owner="user.uid === message.sender"
-            />
-          </li>
-        </ul>
+        <div v-if="user">
+          <ul>
+            <li v-for="message of messages" :key="message.id">
+              <ChatMessage
+                :message="message"
+                :owner="user.uid === message.sender"
+              />
+            </li>
+          </ul>
 
-        <input type="text" v-model="newMessageText" class="input" />
+          <hr />
+          <h5>Record Audio</h5>
 
-        <hr />
+          <button v-if="!recorder" @click="record()" class="button is-info">
+            Record Voice
+          </button>
+          <button v-else @click="stop()" class="button is-danger">Stop</button>
 
-        <h5>Record Audio</h5>
+          <br />
 
-        <button v-if="!recorder" @click="record()">Record</button>
-        <button v-else @click="stop()"></button>
-        <audio v-if="newAudio" :src="newAudioURL" controls></audio>
+          <audio v-if="newAudio" :src="newAudioURL" controls></audio>
 
-        <hr />
+          <hr />
 
-        <button
-          :disabled="!newMessageText || loading"
-          classs="button is-success"
-          type="text"
-          @click="addMessage(user.uid)"
-        >
-          Send
-        </button>
+          <input v-model="newMessageText" class="input" />
+
+          <button
+            :disabled="(!newMessageText && !newAudio) || loading"
+            class="button is-success"
+            type="text"
+            @click="addMessage(user.uid)"
+          >
+            Send
+          </button>
+        </div>
+
+        <Login v-else />
       </template>
     </User>
-  </div>
+  </main>
 </template>
 
 <script>
 import User from "./User.vue";
-import { db, storage } from "../firebase";
 import ChatMessage from "./ChatMessage.vue";
+import Login from "./Login.vue";
+import { db, storage } from "../firebase";
 export default {
-  name: "ChatRoom",
   components: {
     User,
+    Login,
     ChatMessage,
   },
   data() {
@@ -62,7 +78,7 @@ export default {
       return this.$route.params.id;
     },
     messagesCollection() {
-      return db.doc(`chats/${this.chatID}`).collection("messages");
+      return db.doc(`chats/${this.chatId}`).collection("messages");
     },
     newAudioURL() {
       return URL.createObjectURL(this.newAudio);
@@ -70,28 +86,22 @@ export default {
   },
   firestore() {
     return {
-      messages: this.messagesCollection.orderBy("createdAt"),
+      messages: this.messagesCollection.orderBy("createdAt").limitToLast(10),
     };
   },
   methods: {
     async addMessage(uid) {
       this.loading = true;
-
       let audioURL = null;
-
       const { id: messageId } = this.messagesCollection.doc();
-
       if (this.newAudio) {
         const storageRef = storage
           .ref("chats")
           .child(this.chatId)
           .child(`${messageId}.wav`);
-
         await storageRef.put(this.newAudio);
-
         audioURL = await storageRef.getDownloadURL();
       }
-
       await this.messagesCollection.doc(messageId).set({
         text: this.newMessageText,
         sender: uid,
@@ -100,34 +110,28 @@ export default {
       });
       this.loading = false;
       this.newMessageText = "";
-      this.newAudio;
+      this.newAudio = null;
     },
     async record() {
       this.newAudio = null;
-
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: false,
       });
-
-      const options = { MimeType: "audio/webm" };
+      const options = { mimeType: "audio/webm" };
       const recordedChunks = [];
       this.recorder = new MediaRecorder(stream, options);
-
       this.recorder.addEventListener("dataavailable", (e) => {
         if (e.data.size > 0) {
           recordedChunks.push(e.data);
         }
       });
-
       this.recorder.addEventListener("stop", () => {
         this.newAudio = new Blob(recordedChunks);
         console.log(this.newAudio);
       });
-
       this.recorder.start();
     },
-
     async stop() {
       this.recorder.stop();
       this.recorder = null;
@@ -148,7 +152,6 @@ ul {
   padding: 10px;
   border-radius: 0;
 }
-
 li {
   display: flex;
 }
