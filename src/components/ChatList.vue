@@ -1,0 +1,26 @@
+<template>
+  <div>
+    <button @click="createChatRoom()">Create New Chat Room</button>
+  </div>
+</template>
+
+<script>
+import { db } from "../firebase";
+export default {
+  name: "ChatList",
+  props: ["uid"],
+  methods: {
+    async createChatRoom() {
+      const newChat = await db.collection("chats").add({
+        createdAt: Date.now(),
+        owner: this.uid,
+        members: [this.uid],
+      });
+
+      console.log(newChat);
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped></style>
