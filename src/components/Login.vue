@@ -1,7 +1,7 @@
 <template>
-  <aside>
+  <aside class="section">
     <h3>Sign In Anonymously</h3>
-    <button @click="auth.signInAnonymously()">Sign In</button>
+    <button class="button" @click="auth.signInAnonymously()">Sign In</button>
   </aside>
 </template>
 
