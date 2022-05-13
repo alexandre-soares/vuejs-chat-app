@@ -40,7 +40,7 @@
 
 <script>
 import User from "./User.vue";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import ChatMessage from "./ChatMessage.vue";
 export default {
   name: "ChatRoom",
@@ -76,15 +76,31 @@ export default {
   methods: {
     async addMessage(uid) {
       this.loading = true;
+
+      let audioURL = null;
+
       const { id: messageId } = this.messagesCollection.doc();
+
+      if (this.newAudio) {
+        const storageRef = storage
+          .ref("chats")
+          .child(this.chatId)
+          .child(`${messageId}.wav`);
+
+        await storageRef.put(this.newAudio);
+
+        audioURL = await storageRef.getDownloadURL();
+      }
 
       await this.messagesCollection.doc(messageId).set({
         text: this.newMessageText,
         sender: uid,
         createdAt: Date.now(),
+        audioURL,
       });
-      this.newMessageText = "";
       this.loading = false;
+      this.newMessageText = "";
+      this.newAudio;
     },
     async record() {
       this.newAudio = null;
