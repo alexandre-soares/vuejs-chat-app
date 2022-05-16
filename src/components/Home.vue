@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
     <User>
       <template v-slot:user="{ user }">
         <div v-if="user">
