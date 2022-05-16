@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <div class="wrapper">
-      <VuePresentation />
+      <VuePresentation v-if="!mobile" />
+
       <div class="main">
         <div class="main__header">
           <div class="leftSide">
-            <div class="operator">11:34</div>
+            <div class="operator">{{ time }}</div>
           </div>
           <div class="rightSide">
             <div class="data">5G</div>
@@ -25,6 +26,32 @@ import VuePresentation from "./components/VuePresentation.vue";
 export default {
   name: "App",
   components: { VuePresentation },
+  data() {
+    return {
+      mobile: false,
+    };
+  },
+  computed: {
+    time() {
+      var today = new Date();
+      var time = today.getHours() + ":" + today.getMinutes();
+      return time;
+    },
+  },
+  created() {
+    this.checkScreen();
+    window.addEventListener("resize", this.checkScreen);
+  },
+  methods: {
+    checkScreen() {
+      const windowWidth = window.innerWidth;
+      if (windowWidth <= 750) {
+        this.mobile = true;
+        return;
+      }
+      this.mobile = false;
+    },
+  },
 };
 </script>
 

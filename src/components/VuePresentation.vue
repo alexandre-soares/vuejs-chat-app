@@ -2,7 +2,7 @@
   <div class="login">
     <div class="login__header">
       <div class="leftSide">
-        <div class="operator">11:34</div>
+        <div class="operator">{{ time }}</div>
       </div>
       <div class="rightSide">
         <div class="data">5G</div>
@@ -23,6 +23,15 @@
         <li>Record audio on the web</li>
         <li>Upload files to Firebase Storage</li>
       </ul>
+      <p>
+        Github is available
+        <a
+          href="https://github.com/alexandre-soares/vuejs-chat-app"
+          target="_blank"
+          class="button"
+          >Here</a
+        >
+      </p>
     </div>
   </div>
 </template>
@@ -30,6 +39,13 @@
 <script>
 export default {
   name: "VuePresentation",
+  computed: {
+    time() {
+      var today = new Date();
+      var time = today.getHours() + ":" + today.getMinutes();
+      return time;
+    },
+  },
 };
 </script>
 
@@ -108,7 +124,15 @@ span {
   cursor: pointer;
 }
 
-.error {
-  font-size: 14px !important;
+a {
+  background: -webkit-linear-gradient(#d5fd14, #07fcdb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 </style>

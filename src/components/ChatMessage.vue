@@ -71,8 +71,12 @@ export default {
 
 .message.from-user p {
   background-color: #28463f;
+}
+
+.message.from-user img {
   order: 12;
 }
+
 
 .message .sender {
   font-size: 12px;
@@ -80,61 +84,4 @@ export default {
   margin: 2px 0;
 }
 
-/* 
-
-.message {
-  position: relative;
-  color: white;
-  margin-bottom: 2px !important;
-  border-radius: 5px;
-  padding: 10px;
-  display: inline-block;
-  background-color: #009a3e;
-  font-size: 14px;
-}
-.from-user {
-  margin-left: auto;
-  background-color: #28463f;
-  text-align: right;
-  display: table;
-}
-.sender {
-  font-size: 0.5rem;
-  margin-top: 5px;
-  font-size: 12px;
-}
-
-.from-user + .sender {
-  text-align: right;
-}
-
-.message-infos span {
-  display: block;
-}
-
-.from-user-infos {
-  text-align: right;
-}
-
-audio {
-  width: 80%;
-}
-
-audio.from-user-audio {
-  margin-left: auto;
-  display: block;
-}
-
-.message-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.message-wrapper.from-user-wrapper .me,
-.audio-wrapper.from-user-wrapper .me {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-} */
 </style>

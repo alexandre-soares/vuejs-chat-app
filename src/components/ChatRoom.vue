@@ -2,6 +2,8 @@
   <div class="chat-room">
     <h2>Welcome to ChatRoom.vue <br />{{ chatId }}</h2>
 
+    {{ chatInfos }}
+
     <router-link to="/">Back</router-link>
 
     <p>
@@ -230,8 +232,7 @@ button {
 }
 
 .send-form {
-  position: fixed;
-  bottom: 90px;
+  position: relative;
   width: 277px;
 }
 
