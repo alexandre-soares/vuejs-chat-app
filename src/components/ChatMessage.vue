@@ -1,17 +1,20 @@
 <template>
-  <div>
-    <p class="message" v-if="message.text" :class="{ 'from-user': owner }">
-      {{ message.text }}
-    </p>
-    <audio
-      v-if="message.audioURL"
-      :src="message.audioURL"
-      controls
-      :class="{ 'from-user-audio': owner }"
-    ></audio>
-    <div class="message-infos" :class="{ 'from-user-infos': owner }">
-      <span class="sender">{{ getHoursAndMinutes }}</span>
-      <span class="sender">from UID {{ message.sender }}</span>
+  <div class="message" :class="{ 'from-user': owner }">
+    <div class="text-wrapper" v-if="message.text">
+      <p>
+        {{ message.text }}
+      </p>
+      <img class="icon" src="@/assets/user.png" alt="user" />
+    </div>
+    <div class="audio-wrapper" v-if="message.audioURL">
+      <audio :src="message.audioURL" controls></audio>
+      <img class="icon" src="@/assets/user.png" alt="user" />
+    </div>
+    <div class="infos-message">
+      <div class="message-infos">
+        <span class="sender">{{ getHoursAndMinutes }}</span>
+        <!-- <span class="sender">from UID {{ message.sender }}</span> -->
+      </div>
     </div>
   </div>
 </template>
@@ -37,10 +40,54 @@ export default {
 
 <style>
 .message {
+  position: relative;
+  background-color: transparent;
+}
+
+.message.from-user .text-wrapper,
+.message.from-user .audio-wrapper {
+  justify-content: end;
+}
+
+.message.from-user .infos-message {
+  text-align: right;
+}
+
+.text-wrapper,
+.audio-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.text-wrapper p {
+  background-color: #009a3e;
+  margin-bottom: 2px !important;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  order: 1;
+}
+
+.message.from-user p {
+  background-color: #28463f;
+  order: 12;
+}
+
+.message .sender {
+  font-size: 12px;
+  display: block;
+  margin: 2px 0;
+}
+
+/* 
+
+.message {
+  position: relative;
   color: white;
   margin-bottom: 2px !important;
   border-radius: 5px;
-  padding: 12px;
+  padding: 10px;
   display: inline-block;
   background-color: #009a3e;
   font-size: 14px;
@@ -77,4 +124,17 @@ audio.from-user-audio {
   margin-left: auto;
   display: block;
 }
+
+.message-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.message-wrapper.from-user-wrapper .me,
+.audio-wrapper.from-user-wrapper .me {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+} */
 </style>

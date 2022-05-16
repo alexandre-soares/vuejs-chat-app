@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="wrapper">
+      <VuePresentation />
       <div class="main">
         <div class="main__header">
           <div class="leftSide">
@@ -20,8 +21,10 @@
 </template>
 
 <script>
+import VuePresentation from "./components/VuePresentation.vue";
 export default {
   name: "App",
+  components: { VuePresentation },
 };
 </script>
 
@@ -34,8 +37,9 @@ body {
 .wrapper {
   height: 100vh;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  gap: 64px;
 }
 
 .main {

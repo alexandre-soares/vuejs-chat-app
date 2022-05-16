@@ -32,10 +32,11 @@
           <audio v-if="newAudio" :src="newAudioURL" controls></audio>
 
           <p id="audio-in-progress" v-if="recordInProgress">
-            Audio in progress
+            Audio in progress... Please click on the mute icon to stop the
+            record
           </p>
 
-          <div class="send-form" v-on:keyup.enter="addMessage(user.uid)">
+          <div class="send-form">
             <input v-model="newMessageText" class="input" />
             <div class="input-actions">
               <button
@@ -113,31 +114,27 @@ export default {
   },
   methods: {
     async addMessage(uid) {
-      if (this.newMessageText === "") {
-        return;
-      } else {
-        this.loading = true;
-        let audioURL = null;
-        const { id: messageId } = this.messagesCollection.doc();
-        if (this.newAudio) {
-          const storageRef = storage
-            .ref("chats")
-            .child(this.chatId)
-            .child(`${messageId}.wav`);
-          await storageRef.put(this.newAudio);
-          audioURL = await storageRef.getDownloadURL();
-        }
-        await this.messagesCollection.doc(messageId).set({
-          text: this.newMessageText,
-          sender: uid,
-          createdAt: Date.now(),
-          audioURL,
-        });
-        this.loading = false;
-        this.newMessageText = "";
-        this.newAudio = null;
-        this.scrollToBottom();
+      this.loading = true;
+      let audioURL = null;
+      const { id: messageId } = this.messagesCollection.doc();
+      if (this.newAudio) {
+        const storageRef = storage
+          .ref("chats")
+          .child(this.chatId)
+          .child(`${messageId}.wav`);
+        await storageRef.put(this.newAudio);
+        audioURL = await storageRef.getDownloadURL();
       }
+      await this.messagesCollection.doc(messageId).set({
+        text: this.newMessageText,
+        sender: uid,
+        createdAt: Date.now(),
+        audioURL,
+      });
+      this.loading = false;
+      this.newMessageText = "";
+      this.newAudio = null;
+      this.scrollToBottom();
     },
     scrollToBottom() {
       let element = document.getElementById("message-wrapper");
@@ -234,7 +231,7 @@ button {
 
 .send-form {
   position: fixed;
-  bottom: 60px;
+  bottom: 90px;
   width: 277px;
 }
 
