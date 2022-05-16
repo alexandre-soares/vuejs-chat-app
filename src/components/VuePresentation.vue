@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <div class="login__header">
+  <div class="iphone">
+    <div class="iphone__header">
       <div class="leftSide">
         <div class="operator">{{ time }}</div>
       </div>
@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <div class="login__body">
+    <div class="iphone__body">
       <p>Create chats to discuss with anybody with</p>
       <h1>Vue Voxer</h1>
       <hr />
@@ -19,6 +19,8 @@
       <ul>
         <li>User authentication with Firebase (Anonymous, Email/Password)</li>
         <li>Usage of the Vuefire Package</li>
+        <li>Vue Composition API on a Vue 2 project</li>
+        <li>Collection Creation</li>
         <li>Chat Features in Firestore</li>
       </ul>
       <p>
@@ -48,7 +50,7 @@ export default {
 </script>
 
 <style scoped>
-.login {
+.iphone {
   height: 622.08px;
   width: 317px;
   background-color: #011a1b;
@@ -61,7 +63,7 @@ export default {
   justify-content: space-between;
 }
 
-.login__header {
+.iphone__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -94,11 +96,11 @@ export default {
 .main__body {
   margin: auto;
 }
-.login__body {
+.iphone__body {
   margin: auto;
 }
 
-.login__body h1 {
+.iphone__body h1 {
   font-size: 38px;
   font-weight: 700;
   color: white;

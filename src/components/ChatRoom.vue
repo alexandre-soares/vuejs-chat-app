@@ -1,9 +1,6 @@
 <template>
   <div class="chat-room">
     <h2>Welcome to ChatRoom.vue <br />{{ chatId }}</h2>
-
-    {{ chatInfos }}
-
     <router-link to="/">Back</router-link>
 
     <p>
@@ -112,7 +109,7 @@ export default {
 .chat-room {
   width: 100%;
   position: relative;
-  height: 80%;
+  height: 90%;
   margin-bottom: auto !important;
   margin-top: 10px;
 }
