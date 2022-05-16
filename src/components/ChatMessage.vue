@@ -6,10 +6,6 @@
       </p>
       <img class="icon" src="@/assets/user.png" alt="user" />
     </div>
-    <div class="audio-wrapper" v-if="message.audioURL">
-      <audio :src="message.audioURL" controls></audio>
-      <img class="icon" src="@/assets/user.png" alt="user" />
-    </div>
     <div class="infos-message">
       <div class="message-infos">
         <span class="sender">{{ getHoursAndMinutes }}</span>
@@ -45,7 +41,7 @@ export default {
 }
 
 .message.from-user .text-wrapper,
-.message.from-user .audio-wrapper {
+.message.from-user {
   justify-content: end;
 }
 
@@ -53,8 +49,7 @@ export default {
   text-align: right;
 }
 
-.text-wrapper,
-.audio-wrapper {
+.text-wrapper {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -77,11 +72,9 @@ export default {
   order: 12;
 }
 
-
 .message .sender {
   font-size: 12px;
   display: block;
   margin: 2px 0;
 }
-
 </style>

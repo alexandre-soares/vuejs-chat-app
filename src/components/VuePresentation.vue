@@ -20,8 +20,6 @@
         <li>User authentication with Firebase (Anonymous, Email/Password)</li>
         <li>Usage of the Vuefire Package</li>
         <li>Chat Features in Firestore</li>
-        <li>Record audio on the web</li>
-        <li>Upload files to Firebase Storage</li>
       </ul>
       <p>
         Github is available
