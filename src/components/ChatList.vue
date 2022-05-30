@@ -14,7 +14,7 @@
 
     <h2>Create a chat</h2>
 
-    <form>
+    <form @submit.prevent="createChatRoom()">
       <fieldset>
         <label for="name">Please enter a chat name</label>
         <input
@@ -25,7 +25,7 @@
           required
         />
       </fieldset>
-      <button @click="createChatRoom()" class="button">Create</button>
+      <button class="button" type="submit">Create</button>
     </form>
 
     <button @click="auth.signOut()" class="button is-block is-fullwidth">
@@ -93,7 +93,7 @@ button {
 li a {
   color: white;
   cursor: pointer;
-  transition: all .5s ease-in;
+  transition: all 0.5s ease-in;
 }
 
 li a:hover {

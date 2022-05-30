@@ -20,29 +20,36 @@
         <h2>Sign In with Email</h2>
         <span @click="newUser = true">New user?</span>
       </div>
+      <form @submit.prevent="signInOrCreateUser()">
+        <fieldset>
+          <label for="email">Email</label>
+          <input
+            v-model="email"
+            placeholder="Email"
+            type="email"
+            class="input"
+          />
+        </fieldset>
 
-      <fieldset>
-        <label for="email">Email</label>
-        <input v-model="email" placeholder="Email" type="email" class="input" />
-      </fieldset>
+        <fieldset>
+          <label for="password">Password</label>
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Password"
+            class="input"
+          />
+        </fieldset>
 
-      <fieldset>
-        <label for="password">Password</label>
-        <input
-          v-model="password"
-          type="password"
-          placeholder="Password"
-          class="input"
-        />
-      </fieldset>
-
-      <button
-        class="button is-info"
-        :class="{ 'is-loading': loading }"
-        @click="signInOrCreateUser()"
-      >
-        {{ newUser ? "Sign Up" : "Login" }}
-      </button>
+        <button
+          class="button is-info"
+          :class="{ 'is-loading': loading }"
+          @click="signInOrCreateUser()"
+          type="submit"
+        >
+          {{ newUser ? "Sign Up" : "Login" }}
+        </button>
+      </form>
 
       <p class="has-text-danger error" v-if="errorMessage">
         {{ errorMessage }}
@@ -87,7 +94,6 @@ export default {
 </script>
 
 <style scoped>
-
 .login__body {
   margin: auto;
 }
@@ -114,6 +120,10 @@ span {
   display: block;
   font-size: 14px;
   cursor: pointer;
+}
+
+button {
+  color: black !important;
 }
 
 .error {

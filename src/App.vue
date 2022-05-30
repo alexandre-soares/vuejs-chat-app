@@ -1,19 +1,11 @@
 <template>
   <div id="app">
     <div class="wrapper">
-      <VuePresentation v-if="!mobile" />
-
       <div class="main">
         <div class="main__header">
-          <div class="leftSide">
-            <div class="operator">{{ time }}</div>
-          </div>
-          <div class="rightSide">
-            <div class="data">5G</div>
-            <div class="battery">
-              <div class="mid"></div>
-            </div>
-          </div>
+          <div class="circle circle--red"></div>
+          <div class="circle circle--yellow"></div>
+          <div class="circle circle--green"></div>
         </div>
         <router-view class="main__body"></router-view>
       </div>
@@ -22,34 +14,13 @@
 </template>
 
 <script>
-import VuePresentation from "./components/VuePresentation.vue";
 export default {
   name: "App",
-  components: { VuePresentation },
-  data() {
-    return {
-      mobile: false,
-    };
-  },
   computed: {
     time() {
       var today = new Date();
       var time = today.getHours() + ":" + today.getMinutes();
       return time;
-    },
-  },
-  created() {
-    this.checkScreen();
-    window.addEventListener("resize", this.checkScreen);
-  },
-  methods: {
-    checkScreen() {
-      const windowWidth = window.innerWidth;
-      if (windowWidth <= 750) {
-        this.mobile = true;
-        return;
-      }
-      this.mobile = false;
     },
   },
 };
@@ -70,10 +41,10 @@ body {
 }
 
 .main {
-  height: 622.08px;
-  width: 317px;
+  width: 80vw;
+  height: 70vh;
   background-color: #011a1b;
-  border-radius: 3em;
+  border-radius: 1rem;
   position: relative;
   padding: 25px 20px;
   color: white;
@@ -84,36 +55,32 @@ body {
 
 .main__header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  font-size: 12px;
-  flex: 0 0 5%;
+  gap: 10px;
 }
 
-.rightSide {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 7px;
+.main__header .circle {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
 }
 
-.battery {
-  border: 1px solid white;
-  width: 24px;
-  height: 13px;
-  border-radius: 5px;
-  padding: 1px;
+.circle--red {
+  background-color: #FF5F57;
 }
 
-.battery .mid {
-  height: 100%;
-  width: 70%;
-  background-color: white;
-  border-radius: 3px;
+.circle--yellow {
+  background-color: #FEBC2E;
+}
+
+.circle--green {
+  background-color: #27C840;
 }
 
 .main__body {
   margin: auto;
+  width: 80%;
 }
 
 /* hide scrollbar but allow scrolling */

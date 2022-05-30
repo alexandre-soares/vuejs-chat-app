@@ -1,10 +1,10 @@
 <template>
   <div class="chat-room">
-    <h2>Welcome to ChatRoom.vue <br />{{ chatId }}</h2>
+    <h2>Welcome to ChatRoom.vue {{ chatId }}</h2>
     <router-link to="/">Back</router-link>
 
     <p>
-      Open this link in another browser window to chat <br />
+      Open this link in another browser window to chat
       <a target="_blank" :href="`https://your-url.com/#/chats/${chatId}`">
         <code>https://your-url.com/#/chats/{{ chatId }}</code></a
       >
@@ -12,7 +12,7 @@
 
     <User>
       <template #user="{ user }">
-        <div v-if="user" id="message-wrapper">
+        <div v-if="user" id="message-wrapper" class="message-wrapper">
           <ul v-if="messages.length != 0">
             <li v-for="message of messages" :key="message.id">
               <ChatMessage
@@ -27,17 +27,17 @@
           </div>
 
           <hr />
-          <form class="send-form">
-            <input v-model="newMessageText" class="input" />
-            <div class="input-actions">
-              <button
-                :disabled="!newMessageText || loading"
-                @click="addMessage(user.uid)"
-              >
-                <img class="icon" src="@/assets/send.png" alt="send" />
-              </button>
-            </div>
-          </form>
+
+          <div>
+            <form class="send-form" @submit.prevent="addMessage(user.uid)">
+              <input v-model="newMessageText" class="input" />
+              <div class="input-actions">
+                <button :disabled="!newMessageText || loading" type="submit">
+                  <img class="icon" src="@/assets/send.png" alt="send" />
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
 
         <Login v-else />
@@ -137,7 +137,7 @@ ul {
 }
 
 code {
-  font-size: 9px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -156,9 +156,12 @@ button {
   margin-top: 2px;
 }
 
+.message-wrapper {
+  position: relative;
+}
+
 .send-form {
   position: relative;
-  width: 277px;
 }
 
 .send-form .input-actions {
